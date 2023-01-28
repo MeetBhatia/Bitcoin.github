@@ -1,0 +1,93 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.css ">
+    <style>
+      body {
+        background-color: rgb(0, 0, 0);
+        text-align: center;
+      }
+
+      #box {
+        height: 100%;
+        background-color: black;
+      }
+
+      #i {
+        color:yellow;
+        margin-top: 0;
+      }
+      #text1,#text2,#text3,#text4{
+        color: yellow;
+
+      }
+      #btn{
+        background-color:yellow;
+        color: black;
+        font-weight: 500;
+        font-size:x-large;
+        border-radius: 10px;
+        
+      }
+      #s{
+        background-color: black;
+        color: yellow;
+        height: 50px;
+        font-weight: 900;
+    }
+
+    </style>
+  </head>
+  <body>
+   
+
+    <div id="box">
+      <h1 id="i">Bitcoin Price</h1>
+      <marquee id="s">Click On Show to display the current price of Bitcoin .</marquee>
+
+      
+      
+      <button id="btn"  onclick="show()">Show</button>
+      <span>
+        <h1 id="text1"></h1>
+        <h1 id="text2"></h1>
+        <h1 id="text3"></h1>
+        
+      </span>
+    </div>
+
+    <script>
+      async function show() {
+        document.getElementById("text1").innerHTML="Loading..."
+        document.getElementById("text2").innerHTML=""
+        document.getElementById("text3").innerHTML=""
+        
+        const data = await fetch(
+          "https://api.coindesk.com/v1/bpi/currentprice.json"
+        )
+        const actual = await data.json()
+        print1(actual.bpi.USD.code, actual.bpi.USD.rate);
+        print2(actual.bpi.EUR.code, actual.bpi.EUR.rate);
+        print3(actual.bpi.GBP.code, actual.bpi.GBP.rate);
+        
+      }
+
+        function print1(code, rate) {
+            rate=rate.split(".")[0]
+          document.getElementById("text1").innerHTML = code + ` :- $ ` + rate;
+        }
+        function print2(code,rate){
+          rate=rate.split(".")[0]
+          document.getElementById("text2").innerHTML = code + ` :- € ` + rate;
+        }
+        function print3(code,rate){
+          rate=rate.split(".")[0]
+          document.getElementById("text3").innerHTML = code + ` :- £ ` + rate;
+        }
+       
+    </script>
+  </body>
+</html>
